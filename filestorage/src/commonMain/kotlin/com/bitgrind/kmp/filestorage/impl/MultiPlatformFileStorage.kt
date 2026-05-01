@@ -27,12 +27,6 @@ class MultiPlatformFileStorage : FileStorage, FileStorageTestApi {
 
     override var random: Random = Random
 
-    init {
-        println("[MultiPlatformFileStorage]")
-        println("systemTempDir: $systemTempDir")
-        println("systemPathSeparator: $systemPathSeparator")
-    }
-
     override suspend fun createDirectories(path: String) {
         SystemFileSystem.createDirectories(Path(path))
     }
