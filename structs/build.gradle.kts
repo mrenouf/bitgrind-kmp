@@ -1,4 +1,4 @@
-group = "com.bitgrind"
+group = "com.bitgrind.kmp"
 version = "0.1.0"
 
 plugins {
