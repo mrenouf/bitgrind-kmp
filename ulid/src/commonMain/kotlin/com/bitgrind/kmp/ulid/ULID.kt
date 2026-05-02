@@ -2,14 +2,12 @@ package com.bitgrind.kmp.ulid
 
 import org.kotlincrypto.random.CryptoRand
 import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 /**
  * An implementation of [Universally-Unique Lexicographically-Sortable Identifiers](https://github.com/ulid/spec)
  *
  * This class is not thread-safe. For concurrent use, create a new instance for each thread.
  */
-@OptIn(ExperimentalTime::class)
 sealed class ULID(
     val now: () -> Long = { Clock.System.now().toEpochMilliseconds() },
     val random: (ByteArray) -> Unit = { CryptoRand.nextBytes(it) }
