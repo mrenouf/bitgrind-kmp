@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: docker.io/catthehacker/ubuntu:act-latest
+    env:
+      RUNNER_TOOL_CACHE: /toolcache
+      CI: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: oracle
+          java-version: 21
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK 36
+        run: $ANDROID_HOME/cmdline-tools/16.0/bin/sdkmanager "platforms;android-36"
+
+      - uses: gradle/actions/setup-gradle@v4.4.2
+
+
+      - name: Install Google Chrome
+        run: |
+          curl -fsSL https://dl.google.com/linux/linux_signing_key.pub \
+            | sudo gpg --dearmor -o /etc/apt/keyrings/google-chrome.gpg
+          sudo chmod a+r /etc/apt/keyrings/google-chrome.gpg
+          cat <<EOF | sudo tee /etc/apt/sources.list.d/google-chrome.sources
+          X-Repolib-Name: Google Chrome
+          Types: deb
+          URIs: https://dl.google.com/linux/chrome-stable/deb/
+          Suites: stable
+          Components: main
+          Signed-By: /etc/apt/keyrings/google-chrome.gpg
+          EOF
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+          google-chrome --version
+
+      - name: Build and test
+        # Remove -x flags and uncomment env below to include browser tests via Karma
+        run: ./gradlew check -x jsTest -x wasmJsTest
+        # env:
+        #   CHROME_BIN: /usr/bin/google-chrome-stable

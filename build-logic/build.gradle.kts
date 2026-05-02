@@ -19,4 +19,5 @@ dependencies {
     pluginImplementation(libs.plugins.dokka)
     pluginImplementation(libs.plugins.nmcp.publish)
     pluginImplementation(libs.plugins.nmcp.aggregation)
+    pluginImplementation(libs.plugins.vanniktech.maven.publish)
 }

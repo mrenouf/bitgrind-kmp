@@ -14,14 +14,20 @@ kotlin {
     }
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_21)
         }
     }
     jvm()
-    jvmToolchain(17)
+    jvmToolchain(21)
     linuxX64()
     wasmJs {
-        browser()
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadlessNoSandbox()
+                }
+            }
+        }
         generateTypeScriptDefinitions()
         binaries.library()
         compilerOptions {
@@ -29,7 +35,13 @@ kotlin {
         }
     }
     js {
-        browser()
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadlessNoSandbox()
+                }
+            }
+        }
         useEsModules()
         generateTypeScriptDefinitions()
         binaries.library()
@@ -42,8 +54,8 @@ kotlin {
 android {
     compileSdk = 36
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     defaultConfig {
         minSdk = 28

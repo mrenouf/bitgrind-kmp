@@ -6,6 +6,15 @@ plugins {
     id("publish-library")
 }
 
+publishing {
+    publications.withType<MavenPublication>().configureEach {
+        pom {
+            name = "BitGrind FileStorage"
+            description = "Kotlin Multiplatform file storage and I/O API"
+        }
+    }
+}
+
 kotlin {
     sourceSets {
         commonMain.dependencies {
