@@ -6,6 +6,15 @@ plugins {
     id("publish-library")
 }
 
+publishing {
+    publications.withType<MavenPublication>().configureEach {
+        pom {
+            name = "BitGrind Structs"
+            description = "Kotlin Multiplatform data structures"
+        }
+    }
+}
+
 kotlin {
     sourceSets {
         commonTest.dependencies {

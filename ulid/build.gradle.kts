@@ -17,3 +17,12 @@ kotlin {
 android {
     namespace = "com.bitgrind.kmp.ulid"
 }
+
+publishing {
+    publications.withType<MavenPublication>().configureEach {
+        pom {
+            name = "BitGrind ULID"
+            description = "Kotlin Multiplatform implementation of Universally Unique Lexicographically Sortable Identifiers (ULID)"
+        }
+    }
+}
