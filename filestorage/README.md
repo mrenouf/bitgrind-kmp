@@ -120,4 +120,4 @@ kotlin {
 
 ## License
 
-This project is provided as-is. License TBD.
+[MIT License](../LICENSE.txt)

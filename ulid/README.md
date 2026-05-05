@@ -12,56 +12,70 @@ A Kotlin Multiplatform implementation of Universally Unique Lexicographically So
 - **Compact** — 26-character Crockford Base32 string encoding a 48-bit timestamp + 80-bit random component
 - **Case-insensitive** — decodes both upper and lower case
 
-## Platform Support
-
-| Platform     | Randomness Source          |
-|--------------|---------------------------|
-| JVM          | `java.security.SecureRandom` |
-| Android      | `java.security.SecureRandom` |
-| Native       | Platform secure random     |
-| JS/Browser   | `crypto.getRandomValues`   |
-| WASM/Browser | `crypto.getRandomValues`   |
-
 ## Usage
 
 ### Generate a ULID
 
 ```kotlin
-val id: String = ULID.create()
-// e.g. "01hw3k2j5r8wvn4fqdpz6m1b3c"
+import com.bitgrind.kmp.ulid.ulid
+
+val id: String = ulid()
+// e.g. "01HW3K2J5R8WVN4FQDPZ6M1B3C"
 ```
 
-### Decode a ULID
+### Decode the timestamp
 
 ```kotlin
-val values: ULID.Values = ULID.decode("01hw3k2j5r8wvn4fqdpz6m1b3c")
+import com.bitgrind.kmp.ulid.ULID
 
-val timestamp: Long = values.timestamp   // milliseconds since epoch
-val randomness: ByteArray = values.randomness  // 10 bytes of randomness
-
-values.encode() // round-trip back to string
+val timestamp: Long = ULID.decodeTime("01HW3K2J5R8WVN4FQDPZ6M1B3C")  // milliseconds since epoch
 ```
 
-### Parse from constructor
+### Validate a ULID string
 
 ```kotlin
-val values = ULID.Values("01hw3k2j5r8wvn4fqdpz6m1b3c")
+import com.bitgrind.kmp.ulid.ULID
+
+val valid: Boolean = ULID.isValid("01HW3K2J5R8WVN4FQDPZ6M1B3C")
 ```
 
-### Custom instance (e.g. for testing)
+### Dedicated factory instance
 
-`ULID` is a `sealed class` — subclass it to inject a fixed clock or deterministic random source:
+`ULID` is an interface — use `ULID.monotonicFactory()` to create an instance. Each factory tracks its own monotonic state.
 
 ```kotlin
-val ulid = object : ULID(
-    now = { fixedTimestampMs },
-    random = { buffer -> buffer.fill(42) }
-) {}
+import com.bitgrind.kmp.ulid.ULID
 
-val id = ulid.create()
+val factory: ULID = ULID.monotonicFactory()
+val id: String = factory()
 ```
 
-> **Thread safety**: the default `ULID.Default` instance is not thread-safe due to the monotonic state it tracks. Create a separate instance per thread for concurrent use.
+> **Thread safety**: each factory instance is not thread-safe due to the monotonic state it tracks. Create a separate instance per thread for concurrent use.
+
+### Custom time
+
+Pass an explicit timestamp (milliseconds since epoch) to either the top-level function or a factory:
+
+```kotlin
+import com.bitgrind.kmp.ulid.ULID
+import com.bitgrind.kmp.ulid.ulid
+
+val id: String = ulid(time = fixedTimestampMs)
+
+val factory: ULID = ULID.monotonicFactory()
+val id2: String = factory(time = fixedTimestampMs)
+```
+
+### Custom randomness (e.g. for testing)
+
+Supply a custom `random` function to `monotonicFactory` to inject a deterministic random source:
+
+```kotlin
+import com.bitgrind.kmp.ulid.ULID
+
+val factory: ULID = ULID.monotonicFactory(random = { buffer -> buffer.fill(42) })
+val id: String = factory()
+```
 
 ## Adding to Your Project
 
@@ -78,11 +92,11 @@ kotlin {
 
 ## Dependencies
 
-| Library              | Version | Purpose                          |
-|----------------------|---------|----------------------------------|
-| Kotlin Multiplatform | 2.3.20  | Language & multiplatform tooling |
+| Library              | Version | Purpose                           |
+|----------------------|---------|-----------------------------------|
+| Kotlin Multiplatform | 2.3.20  | Language & multiplatform tooling  |
 | kotlincrypto/random  | 0.6.0   | Platform-native secure randomness |
 
 ## License
 
-Apache License 2.0
+[MIT License](../LICENSE.txt)
