@@ -17,23 +17,9 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_21)
         }
     }
-    jvm()
-    jvmToolchain(21)
-    linuxX64()
-    wasmJs {
-        browser {
-            testTask {
-                useKarma {
-                    useChromeHeadlessNoSandbox()
-                }
-            }
-        }
-        generateTypeScriptDefinitions()
-        binaries.library()
-        compilerOptions {
-            target = "es2015"
-        }
-    }
+    iosArm64()
+    iosSimulatorArm64()
+    iosX64()
     js {
         browser {
             testTask {
@@ -43,6 +29,31 @@ kotlin {
             }
         }
         useEsModules()
+        generateTypeScriptDefinitions()
+        binaries.library()
+        compilerOptions {
+            target = "es2015"
+        }
+    }
+    jvm()
+    jvmToolchain(21)
+    linuxArm64()
+    linuxX64()
+    macosArm64()
+    mingwX64()
+    tvosArm64()
+    tvosSimulatorArm64()
+    watchosArm32()
+    watchosArm64()
+    watchosSimulatorArm64()
+    wasmJs {
+        browser {
+            testTask {
+                useKarma {
+                    useChromeHeadlessNoSandbox()
+                }
+            }
+        }
         generateTypeScriptDefinitions()
         binaries.library()
         compilerOptions {
