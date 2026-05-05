@@ -1,4 +1,5 @@
-# kmp-filestorage
+# filestorage
+![Maven Central Version](https://img.shields.io/maven-central/v/com.bitgrind.kmp/filestorage)
 
 A Kotlin Multiplatform file storage library providing a unified API for file I/O across JVM, Android, and web (JS/WASM) targets. Write once, store everywhere.
 

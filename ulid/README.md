@@ -1,4 +1,5 @@
-# kmp-ulid
+# ulid
+![Maven Central Version](https://img.shields.io/maven-central/v/com.bitgrind.kmp/ulid)
 
 A Kotlin Multiplatform implementation of Universally Unique Lexicographically Sortable Identifiers (ULID). Generate compact, URL-safe, sortable IDs across JVM, Android, Native, and web targets.
 

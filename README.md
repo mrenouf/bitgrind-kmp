@@ -4,11 +4,11 @@ A collection of Kotlin Multiplatform libraries targeting JVM, Android, Native, a
 
 ## Libraries
 
-| Library | Version | Description                                                                                                                                             |
-|---------|---------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [ulid](ulid/README.md) | `0.1.0` | Lexicographically sortable, monotonic, cryptographically random IDs — 26-char Crockford Base32 encoding of a 48-bit timestamp + 80-bit random component |
-| [structs](structs/README.md) | `0.1.0` | Zero-overhead data structures; currently a 64-bit inline `BitSet` with full bitwise ops and set-bit iteration                                           |
-| [filestorage](filestorage/README.md) | `0.1.3` | Unified async file I/O API with native browser support using OPFS.                                                                                      |
+| Library | Version                                                                                       | Description                                                                                                                                             |
+|---------|-----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [ulid](ulid/README.md) | ![Maven Central Version](https://img.shields.io/maven-central/v/com.bitgrind.kmp/ulid)        | Lexicographically sortable, monotonic, cryptographically random IDs — 26-char Crockford Base32 encoding of a 48-bit timestamp + 80-bit random component |
+| [structs](structs/README.md) | ![Maven Central Version](https://img.shields.io/maven-central/v/com.bitgrind.kmp/structs)     | Zero-overhead data structures; currently a 64-bit inline `BitSet` with full bitwise ops and set-bit iteration                                           |
+| [filestorage](filestorage/README.md) | ![Maven Central Version](https://img.shields.io/maven-central/v/com.bitgrind.kmp/filestorage) | Unified async file I/O API with native browser support using OPFS.                                                                                      |
 
 ## Platform Support
 

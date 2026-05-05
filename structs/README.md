@@ -1,4 +1,5 @@
-# kmp-structs
+# structs
+![Maven Central Version](https://img.shields.io/maven-central/v/com.bitgrind.kmp/structs)
 
 Kotlin Multiplatform data structures implemented as zero-overhead value classes.
 
